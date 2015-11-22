@@ -1,0 +1,27 @@
+{
+  "name": "cmt2emt-webpack-plugin",
+  "version": "0.0.1",
+  "description": "A webpack plugin to replace comment nodes with element nodes in html file",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "webpack": "^1.12.8"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "mocha test/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeching/cmt2emt-webpack-plugin.git"
+  },
+  "author": "leeching <417300981@qq.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leeching/cmt2emt-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/leeching/cmt2emt-webpack-plugin#readme"
+}
