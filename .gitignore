@@ -3,4 +3,5 @@ node_modules
 /build/
 
 # files
-.DS_Store
+*.DS_Store
+*.log
