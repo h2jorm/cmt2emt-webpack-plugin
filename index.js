@@ -42,13 +42,16 @@ function composeScriptTag(commentContent, stats, transform) {
   })
 
   const identity = pieces[0]
-  const filename = pieces[1]
+  let filename = pieces[1]
   const assetsByChunkName = stats.assetsByChunkName
 
   if (identity !== IDENTITY || !assetsByChunkName.hasOwnProperty(filename))
     return `<!--${commentContent}-->`
 
-  return `<script src="${transform ? transform(assetsByChunkName[filename]) : assetsByChunkName[filename]}"></script>`
+  filename = assetsByChunkName[filename]
+  filename = Array.isArray(filename) ? filename[0] : filename
+
+  return `<script src="${transform ? transform(filename) : filename}"></script>`
 
 }
 
