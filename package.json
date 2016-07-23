@@ -1,6 +1,6 @@
 {
   "name": "cmt2emt-webpack-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A webpack plugin to replace comment nodes with element nodes in html file",
   "main": "index.js",
   "scripts": {

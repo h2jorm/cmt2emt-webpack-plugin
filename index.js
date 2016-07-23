@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs');
+const path = require('path');
 const IDENTITY = 'cmt2emt-webpack-plugin';
 
 function Plugin(options) {
@@ -27,16 +28,41 @@ Plugin.prototype.apply = function(compiler) {
       data = data.replace(/<!--(.*)-->/g, (commentNodeString, commentContent) => {
         return composeScriptTag(commentContent, webpackStatsJson, transform);
       });
-      compilation.assets[outputFile] = {
-        source: () => data,
-        size: () => data.length
-      };
-      callback();
+      // check whether output file is outdated
+      const outputPath = compilation.compiler.outputPath;
+      checkIfOutdated(path.join(outputPath, outputFile), data)
+        .then(function () {
+          compilation.assets[outputFile] = {
+            source: () => data,
+            size: () => data.length
+          };
+          callback();
+        })
+        .catch(function () {
+          callback();
+        });
     });
 
   });
 
 };
+
+/**
+ * check if a output file has been outdated
+ * @return {Promise}
+ */
+function checkIfOutdated(outputFile, updatedFileContent) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(outputFile, 'utf8', (err, data) => {
+      if (err)
+        return resolve();
+      if (data === updatedFileContent)
+        return reject();
+      else
+        return resolve();
+    });
+  });
+}
 
 function composeScriptTag(commentContent, stats, transform) {
   let _pieces = commentContent.split(' ');
