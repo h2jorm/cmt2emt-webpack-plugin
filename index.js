@@ -20,6 +20,10 @@ Plugin.prototype.apply = function(compiler) {
     const webpackStatsJson = compilation.getStats().toJson();
 
     fs.readFile(sourceFile, 'utf8', (err, data) => {
+      if (err) {
+        callback();
+        throw new Error('error occurs when reading source file');
+      }
       data = data.replace(/<!--(.*)-->/g, (commentNodeString, commentContent) => {
         return composeScriptTag(commentContent, webpackStatsJson, transform);
       });
